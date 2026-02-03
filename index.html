@@ -1,54 +1,46 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Valentine 💖</title>
-<style>
-body{
-  background:#ffe6ee;
-  font-family:Arial, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.card{
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  text-align:center;
-}
-img{width:180px}
-button{
-  padding:12px 24px;
-  margin:10px;
-  font-size:18px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-}
-#yes{background:#ff4d6d;color:white}
-#no{background:#ccc}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine</title>
+  <style>
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#ffe6ee;font-family:Arial,sans-serif}
+    .card{background:#fff;padding:26px;border-radius:20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15);width:min(520px,92vw)}
+    img{width:190px;height:auto;display:block;margin:0 auto 10px}
+    h2{margin:10px 0 6px}
+    .btns{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+    button{border:0;border-radius:14px;padding:12px 20px;font-size:18px;font-weight:800;cursor:pointer;min-width:140px}
+    #yes{background:#ff4d6d;color:#fff}
+    #no{background:#e5e7eb;color:#111}
+  </style>
 </head>
 <body>
-<div class="card">
-  <img src="https://i.imgur.com/9Xnt7hY.png">
-  <h2>Will you be my Valentine? 💕</h2>
-  <button id="yes">Yes</button>
-  <button id="no">No</button>
-</div>
+  <div class="card">
+    <img alt="monkey holding a heart" src="https://i.imgur.com/9Xnt7hY.png">
+    <h2>Will you be my Valentine? 💖</h2>
+    <div class="btns">
+      <button id="yes" type="button">Yes</button>
+      <button id="no" type="button">No</button>
+    </div>
+  </div>
 
-<script>
-let yes=document.getElementById("yes");
-let no=document.getElementById("no");
-let size=18;
-no.onclick=()=>{
-  size+=10;
-  yes.style.fontSize=size+"px";
-  no.style.fontSize=Math.max(10,30-size)+"px";
-};
-yes.onclick=()=>alert("I love you ❤️");
-</script>
+  <script>
+    const yes = document.getElementById("yes");
+    const no  = document.getElementById("no");
+    let yesScale = 1;
+    let noScale  = 1;
+
+    no.addEventListener("click", () => {
+      yesScale = Math.min(3.2, yesScale + 0.18);
+      noScale  = Math.max(0.35, noScale  - 0.10);
+      yes.style.transform = `scale(${yesScale})`;
+      no.style.transform  = `scale(${noScale})`;
+    });
+
+    yes.addEventListener("click", () => {
+      document.body.innerHTML = "<div style='font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#ffe6ee;text-align:center;padding:24px'><div style='background:#fff;padding:26px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.15);width:min(520px,92vw)'><h1 style='margin:0 0 10px'>YAY 💖</h1><p style='margin:0;font-size:18px'>See you on Valentine’s.</p></div></div>";
+    });
+  </script>
 </body>
 </html>
