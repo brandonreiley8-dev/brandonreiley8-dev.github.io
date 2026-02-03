@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+<style>
+body{
+  background:#ffe6ee;
+  font-family:Arial, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+img{width:180px}
+button{
+  padding:12px 24px;
+  margin:10px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
+#yes{background:#ff4d6d;color:white}
+#no{background:#ccc}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src="https://i.imgur.com/9Xnt7hY.png">
+  <h2>Will you be my Valentine? 💕</h2>
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<script>
+let yes=document.getElementById("yes");
+let no=document.getElementById("no");
+let size=18;
+no.onclick=()=>{
+  size+=10;
+  yes.style.fontSize=size+"px";
+  no.style.fontSize=Math.max(10,30-size)+"px";
+};
+yes.onclick=()=>alert("I love you ❤️");
+</script>
+</body>
+</html>
