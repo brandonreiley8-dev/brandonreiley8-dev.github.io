@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta property="og:title" content="Epstein Files">
-<meta property="og:description" content="Click to view">
-<meta property="og:type" content="website">
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Epstein Files</title>
+  <meta property="og:title" content="Epstein Files">
+  <meta property="og:description" content="Click to view">
+  <meta property="og:type" content="website">
+
   <style>
     :root{
       --bg1:#ffe6ee;
@@ -33,7 +35,6 @@
       color:var(--text);
       overflow:hidden;
     }
-
     .card{
       width:min(560px,92vw);
       background:rgba(255,255,255,.92);
@@ -45,41 +46,30 @@
       backdrop-filter: blur(10px);
       position:relative;
     }
-
     .emoji{
       font-size:72px;
       line-height:1;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,.12));
-      margin:4px 0 8px;
+      margin:6px 0 10px;
       user-select:none;
     }
-
     h1{
       margin:8px 0 6px;
       font-size:clamp(22px,4.6vw,34px);
       letter-spacing:-0.02em;
     }
-
+    .name{ color:var(--yes2); font-weight:900; }
     .sub{
       margin:0 0 14px;
       color:var(--muted);
       font-size:14px;
     }
-
-    .name{
-      color:var(--yes2);
-      font-weight:900;
-    }
-
     .btns{
       display:flex;
       gap:12px;
       justify-content:center;
-      align-items:center;
       flex-wrap:wrap;
-      margin-top:8px;
+      margin-top:10px;
     }
-
     button{
       border:0;
       border-radius:14px;
@@ -88,29 +78,20 @@
       font-weight:900;
       cursor:pointer;
       min-width:150px;
-      user-select:none;
-      transition: transform .18s ease, opacity .18s ease, filter .18s ease;
+      transition:transform .18s ease, opacity .18s ease;
       box-shadow:0 10px 24px rgba(0,0,0,.10);
-      touch-action: manipulation;
     }
-
     #yes{
       background:linear-gradient(180deg,var(--yes1),var(--yes2));
       color:#fff;
       transform:scale(1);
     }
-
     #no{
       background:var(--no);
       color:#111;
       transform:scale(1);
       opacity:1;
-      box-shadow:0 10px 20px rgba(0,0,0,.08);
     }
-
-    button:active{ transform:scale(.98); }
-
-    /* floating hearts background (CSS only) */
     .hearts{
       position:absolute;
       inset:0;
@@ -135,33 +116,22 @@
     }
     .heart:before{ left:-7px; top:0; }
     .heart:after{ left:0; top:-7px; }
-
     @keyframes float{
       from{ transform:translateY(120%) rotate(45deg); }
       to{ transform:translateY(-160%) rotate(45deg); }
     }
-
-    .note{
-      margin-top:12px;
-      font-size:12px;
-      color:var(--muted);
-      opacity:.75;
-    }
-
-    /* final screen */
     .final{
       display:flex;
       flex-direction:column;
       gap:10px;
       align-items:center;
       justify-content:center;
-      padding:28px 18px 22px;
+      padding:28px 18px;
       text-align:center;
     }
     .final .big{
       font-size:clamp(24px,5vw,40px);
       font-weight:1000;
-      letter-spacing:-0.02em;
     }
     .final .line{
       font-size:18px;
@@ -170,37 +140,34 @@
     .final .small{
       font-size:13px;
       color:var(--muted);
-      opacity:.85;
     }
   </style>
 </head>
+
 <body>
   <div class="card" id="card">
     <div class="hearts" id="hearts"></div>
 
-    <div class="emoji" aria-hidden="true">🐵❤️</div>
+    <div class="emoji">🐵❤️</div>
 
     <h1>Will you be my Valentine, <span class="name">Churoro</span>?</h1>
-    <div class="sub" id="sub">One click. No pressure (but the “No” gets shy).</div>
+    <div class="sub">One click. No pressure.</div>
 
     <div class="btns">
       <button id="yes" type="button">Yes 💖</button>
       <button id="no" type="button">No</button>
     </div>
-
-    <div class="note" id="note">Tip: try pressing “No” (it slowly disappears).</div>
   </div>
 
   <script>
-    // Build floating hearts (CSS-only animation; no external assets)
     const hearts = document.getElementById("hearts");
     for (let i = 0; i < 18; i++) {
       const h = document.createElement("div");
       h.className = "heart";
-      h.style.left = (Math.random() * 100) + "%";
-      h.style.animationDuration = (7 + Math.random() * 7) + "s";
-      h.style.animationDelay = (-Math.random() * 10) + "s";
-      const s = 10 + Math.random() * 18;
+      h.style.left = Math.random()*100 + "%";
+      h.style.animationDuration = (7 + Math.random()*7) + "s";
+      h.style.animationDelay = (-Math.random()*10) + "s";
+      const s = 10 + Math.random()*18;
       h.style.width = s + "px";
       h.style.height = s + "px";
       hearts.appendChild(h);
@@ -208,80 +175,47 @@
 
     const yes = document.getElementById("yes");
     const no  = document.getElementById("no");
-    const sub = document.getElementById("sub");
-    const note = document.getElementById("note");
     const card = document.getElementById("card");
 
-    // “Yes” gets more intimate with every click (text + gentle growth)
     const yesPhrases = [
       "Yes 💖",
       "Yes, Churoro 💘",
       "I choose you ❤️",
       "Always you 🥺❤️",
-      "I’m yours 💞",
-      "Forever, yes 💗"
+      "I’m yours 💞"
     ];
     let yesClicks = 0;
-
-    // “No” shrinks/fades/moves; eventually disappears
     let noScale = 1;
     let noOpacity = 1;
 
-    function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+    function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
 
-    no.addEventListener("click", () => {
-      // shrink + fade
+    no.onclick = () => {
       noScale = clamp(noScale - 0.12, 0, 1);
       noOpacity = clamp(noOpacity - 0.14, 0, 1);
-
-      // small “shy” drift
-      const dx = (Math.random() * 18 - 9);
-      const dy = (Math.random() * 14 - 7);
-
-      no.style.transform = `scale(${noScale}) translate(${dx}px,${dy}px)`;
+      no.style.transform = `scale(${noScale})`;
       no.style.opacity = noOpacity;
-
-      // yes grows slightly each no-click (subtle, capped)
-      const yesScale = clamp(1 + (1 - noScale) * 0.6, 1, 1.9);
-      yes.style.transform = `scale(${yesScale})`;
-
-      sub.textContent = "Okay… the “No” is getting shy.";
-      note.textContent = "Keep trying “No” 😌";
-
+      yes.style.transform = `scale(${clamp(1 + (1-noScale)*0.6,1,1.9)})`;
       if (noScale <= 0.35 || noOpacity <= 0.15) {
-        no.style.pointerEvents = "none";
         no.style.display = "none";
-        note.textContent = "No has disappeared. Only one choice left.";
-        sub.textContent = "Just say yes 😌";
       }
-    });
+    };
 
-    yes.addEventListener("click", () => {
+    yes.onclick = () => {
       yesClicks++;
-      const idx = clamp(yesClicks, 0, yesPhrases.length - 1);
-      yes.textContent = yesPhrases[idx];
-
-      // subtle growth + “intimate” vibe
-      const scale = clamp(1 + yesClicks * 0.08, 1, 1.6);
-      yes.style.transform = `scale(${scale})`;
-
-      // On second click (or later), confirm with final screen.
-      // Keeps it simple and avoids popups/alerts.
+      yes.textContent = yesPhrases[Math.min(yesClicks, yesPhrases.length-1)];
+      yes.style.transform = `scale(${clamp(1 + yesClicks*0.08,1,1.6)})`;
       if (yesClicks >= 2) {
         card.innerHTML = `
-          <div class="hearts"></div>
           <div class="final">
-            <div class="emoji" aria-hidden="true">🐵❤️</div>
+            <div class="emoji">🐵❤️</div>
             <div class="big">Churoro, you’re my Valentine 💖</div>
             <div class="line">Now u get me something for valentines ya</div>
             <div class="small">Screenshot this 😌</div>
           </div>
         `;
-      } else {
-        sub.textContent = "One more yes 😌";
-        note.textContent = "Click “Yes” again.";
       }
-    });
+    };
   </script>
 </body>
 </html>
